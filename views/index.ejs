@@ -7,9 +7,19 @@
     <title>Document</title>
 </head>
 <body>
+    <h1>addresses</h1>
+    <ul>
+        <% for(let i =0; i < addresses.length; i++) { %>
+            <li>
+                <span><%= addresses[i].name %> </span>
+                <span><%= addresses[i].address %> </span>
+                <span><%= addresses[i].phone %> </span>
+            </li> 
+        <% } %> 
+    </ul>
 
     <form action="/addAddress" method="POST">
-        <input type="text" placeholder="Add your name" name="nameEntry">
+        <input type="text" placeholder="Add your name" name="nameEntry"> 
         <input type="text" placeholder="Add your address" name="addressEntry">
         <input type="number" placeholder="Add your mobile number" name="phoneEntry">
         <input type="submit">

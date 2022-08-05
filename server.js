@@ -11,7 +11,7 @@ app.listen(PORT, console.log("Server running"))
 MongoClient.connect('mongodb+srv://admin:admin@cluster0.k3icy.mongodb.net/?retryWrites=true&w=majority', {useUnifiedTopology: true})
     .then(client => {
         console.log(`Connected to ${dbName} Database`)
-        db = client.db(dbName)
+        db = client.db(dbName) // creates a database
     })
 
 app.set('view engine', 'ejs')
@@ -20,11 +20,12 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 app.get('/', async (req,res) => {
-    res.render('index.ejs')
+    const allAdresses = await db.collection('addresses').find().toArray()
+    res.render('index.ejs', {addresses: allAdresses})
 })
 
 app.post('/addAddress', (req,res) => {
-    db.collection('addresses').insertOne({
+    db.collection('addresses').insertOne({ // creates a collection
         name: req.body.nameEntry,
         address: req.body.addressEntry,
         phone: req.body.phoneEntry
@@ -35,3 +36,4 @@ app.post('/addAddress', (req,res) => {
         res.redirect('/')
     })
 })
+
